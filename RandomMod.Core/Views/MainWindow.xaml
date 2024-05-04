@@ -23,10 +23,6 @@
 
         <ui:TitleBar Title="随机MOD生成器" Grid.Row="0" />
 
-        <ui:NavigationView
-            x:Name="RootNavigation"
-            Grid.Row="1"
-            FooterMenuItemsSource="{Binding NavigationFooter, Mode=OneWay}"
-            MenuItemsSource="{Binding NavigationItems, Mode=OneWay}" />
+        <ContentControl x:Name="ContentControl" Grid.Row="1" />
     </Grid>
 </ui:FluentWindow>

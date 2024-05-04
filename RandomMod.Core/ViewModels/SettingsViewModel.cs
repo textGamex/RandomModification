@@ -10,9 +10,9 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private string _gameRootPath;
 
-    private readonly UserConfigService _configService;
+    private readonly AppConfigService _configService;
 
-    public SettingsViewModel(UserConfigService configService)
+    public SettingsViewModel(AppConfigService configService)
     {
         _configService = configService;
 

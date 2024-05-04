@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\GameResourcesSelectorUserControl.xaml" />
+    <None Remove="Views\MainNavigationUserControl.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\StateConfigPage.xaml" />
   </ItemGroup>
@@ -19,6 +21,10 @@
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 	<PackageReference Include="WPF-UI" Version="3.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Messages\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio></ProjectExtensions>

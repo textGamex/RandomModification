@@ -18,7 +18,7 @@ public static class Program
         builder.Services.AddSingleton<App>();
         builder.Services.AddHostedService<HostedService<App, MainWindow>>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
-        builder.Services.AddSingleton<INavigationWindow, MainWindow>();
+        builder.Services.AddSingleton<INavigationWindow, MainNavigationUserControl>();
 
         builder.Services.AddSingleton<MainWindow>();
         builder.Services.AddSingleton<MainWindowViewModel>();
@@ -26,8 +26,12 @@ public static class Program
         builder.Services.AddSingleton<StateConfigViewModel>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<SettingsViewModel>();
+        builder.Services.AddSingleton<MainNavigationUserControl>();
+        builder.Services.AddSingleton<MainNavigationViewModel>();
+        builder.Services.AddSingleton<GameResourcesSelectorUserControl>();
+        builder.Services.AddSingleton<GameResourcesSelectorViewModel>();
 
-        builder.Services.AddSingleton<UserConfigService>(_ => UserConfigService.Load());
+        builder.Services.AddSingleton<AppConfigService>(_ => AppConfigService.Load());
         builder.Services.AddSingleton<IPageService, PageService>();
         builder.Services.AddSingleton<IContentDialogService, ContentDialogService>();
         builder.Services.AddSingleton<DialogService>();

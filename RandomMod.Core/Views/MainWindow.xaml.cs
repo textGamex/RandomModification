@@ -1,5 +1,8 @@
 ﻿using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RandomMod.Core.Messages;
 using RandomMod.Core.Services;
 using RandomMod.Core.ViewModels;
 using Wpf.Ui;
@@ -7,34 +10,31 @@ using Wpf.Ui.Controls;
 
 namespace RandomMod.Core.Views;
 
-public partial class MainWindow : INavigationWindow
+public partial class MainWindow
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
-    private readonly UserConfigService _configService;
+    private readonly AppConfigService _configService;
+    private readonly IServiceProvider _serviceProvider;
 
-    public MainWindow(IHostApplicationLifetime hostApplicationLifetime, INavigationService navigationService,
-        MainWindowViewModel model, UserConfigService configService)
+    public MainWindow(IHostApplicationLifetime hostApplicationLifetime, MainWindowViewModel model, 
+        AppConfigService configService, IServiceProvider serviceProvider)
     {
         DataContext = model;
         _hostApplicationLifetime = hostApplicationLifetime;
         _configService = configService;
+        _serviceProvider = serviceProvider;
         InitializeComponent();
 
-        navigationService.SetNavigationControl(RootNavigation);
-        //RootNavigation.SetServiceProvider(serviceProvider);
-        Loaded += OnLoaded;
-    }
-
-    private void OnLoaded(object sender, RoutedEventArgs e)
-    {
-        if (string.IsNullOrWhiteSpace(_configService.GameRootPath))
+        if (string.IsNullOrWhiteSpace(configService.GameRootPath))
         {
-            RootNavigation.Navigate(typeof(SettingsPage));
+            ContentControl.Content = serviceProvider.GetRequiredService<GameResourcesSelectorUserControl>();
         }
         else
         {
-            RootNavigation.Navigate(typeof(StateConfigPage));
+            ContentControl.Content = serviceProvider.GetRequiredService<MainNavigationUserControl>();
         }
+        WeakReferenceMessenger.Default.Register<FinishAppFirstConfigMessage>(this,
+            (_,_) => ContentControl.Content = _serviceProvider.GetRequiredService<MainNavigationUserControl>());
     }
 
     protected override void OnClosed(EventArgs e)
@@ -44,43 +44,5 @@ public partial class MainWindow : INavigationWindow
         _hostApplicationLifetime.StopApplication();
     }
 
-    #region 导航实现
 
-    public INavigationView GetNavigation()
-    {
-        return RootNavigation;
-    }
-
-    public bool Navigate(Type pageType)
-    {
-        return RootNavigation.Navigate(pageType);
-    }
-
-    public void SetServiceProvider(IServiceProvider serviceProvider)
-    {
-        RootNavigation.SetServiceProvider(serviceProvider);
-    }
-
-    public void SetPageService(IPageService pageService)
-    {
-        RootNavigation.SetPageService(pageService);
-    }
-
-    public void ShowWindow()
-    {
-        Show();
-    }
-
-    public void CloseWindow()
-    {
-        Close();
-    }
-
-    // ?
-    INavigationView INavigationWindow.GetNavigation()
-    {
-        throw new NotImplementedException();
-    }
-
-    #endregion
 }
