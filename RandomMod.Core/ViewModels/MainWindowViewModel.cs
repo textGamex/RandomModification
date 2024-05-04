@@ -21,12 +21,6 @@ public partial class MainWindowViewModel : ObservableObject
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Map24 },
                 TargetPageType = typeof(Views.StateConfigPage)
             },
-            new NavigationViewItem
-            {
-                Content = "Home",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Map24 },
-                TargetPageType = typeof(Views.StateConfigPage)
-            }
         ];
 
         NavigationFooter =

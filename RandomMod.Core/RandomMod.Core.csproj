@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\GameResourcesSelectPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\StateConfigPage.xaml" />
   </ItemGroup>

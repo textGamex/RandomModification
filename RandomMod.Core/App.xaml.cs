@@ -16,6 +16,11 @@ public partial class App : Application
     {
         _serviceProvider = serviceProvider;
         InitializeComponent();
+
+        if (!Directory.Exists(ConfigFolder))
+        {
+            Directory.CreateDirectory(ConfigFolder);
+        }
     }
 
     public T GetRequiredService<T>()

@@ -4,6 +4,7 @@ using RandomMod.Core.Services;
 using RandomMod.Core.ViewModels;
 using RandomMod.Core.Views;
 using Wpf.Ui;
+using Wpf.Ui.Controls;
 
 namespace RandomMod.Core;
 
@@ -21,8 +22,6 @@ public static class Program
 
         builder.Services.AddSingleton<MainWindow>();
         builder.Services.AddSingleton<MainWindowViewModel>();
-        builder.Services.AddTransient<GameResourcesSelectPage>();
-        builder.Services.AddTransient<GameResourcesSelectViewModel>();
         builder.Services.AddSingleton<StateConfigPage>();
         builder.Services.AddSingleton<StateConfigViewModel>();
         builder.Services.AddSingleton<SettingsPage>();
@@ -30,6 +29,8 @@ public static class Program
 
         builder.Services.AddSingleton<UserConfigService>(_ => UserConfigService.Load());
         builder.Services.AddSingleton<IPageService, PageService>();
+        builder.Services.AddSingleton<IContentDialogService, ContentDialogService>();
+        builder.Services.AddSingleton<DialogService>();
 
         var host = builder.Build();
         host.Run();

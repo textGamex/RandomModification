@@ -29,7 +29,7 @@ public partial class MainWindow : INavigationWindow
     {
         if (string.IsNullOrWhiteSpace(_configService.GameRootPath))
         {
-            RootNavigation.Navigate(typeof(GameResourcesSelectPage));
+            RootNavigation.Navigate(typeof(SettingsPage));
         }
         else
         {
@@ -40,6 +40,7 @@ public partial class MainWindow : INavigationWindow
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
+        _configService.Save();
         _hostApplicationLifetime.StopApplication();
     }
 

@@ -24,6 +24,7 @@ public class UserConfigService
             config = new UserConfigService();
             _logger.LogWarning("用户配置文件反序列化失败, 内容:{Content}", content);
         }
+        _logger.LogInformation("用户配置文件加载成功");
         return config;
     }
 
