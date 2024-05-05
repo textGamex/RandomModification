@@ -12,11 +12,11 @@ public partial class GameResourcesSelectorViewModel : ObservableObject
     [ObservableProperty]
     private string _gameRootPath = string.Empty;
 
-    private readonly AppConfigService _ConfigService;
+    private readonly AppConfigService _configService;
 
     public GameResourcesSelectorViewModel(AppConfigService configService)
     {
-        _ConfigService = configService;
+        _configService = configService;
     }
 
     [RelayCommand]
@@ -40,8 +40,8 @@ public partial class GameResourcesSelectorViewModel : ObservableObject
         {
             return;
         }
-        _ConfigService.GameRootPath = GameRootPath;
-        Task.Run(_ConfigService.Save);
+        _configService.GameRootPath = GameRootPath;
+        Task.Run(_configService.Save);
         WeakReferenceMessenger.Default.Send(new FinishAppFirstConfigMessage());
     }
 }
