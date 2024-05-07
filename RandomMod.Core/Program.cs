@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using RandomMod.Core.Game;
 using RandomMod.Core.Services;
 using RandomMod.Core.ViewModels;
 using RandomMod.Core.Views;
@@ -15,6 +18,12 @@ public static class Program
     {
         var builder = Host.CreateApplicationBuilder(args);
 
+        builder.Configuration.AddJsonFile("appsettings.json");
+#if DEBUG
+        builder.Environment.EnvironmentName = "Development";
+        builder.Configuration.AddJsonFile("appsettings.Development.json");
+#endif
+        
         builder.Services.AddSingleton<App>();
         builder.Services.AddHostedService<HostedService<App, MainWindow>>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -35,6 +44,12 @@ public static class Program
         builder.Services.AddSingleton<IPageService, PageService>();
         builder.Services.AddSingleton<IContentDialogService, ContentDialogService>();
         builder.Services.AddSingleton<DialogService>();
+        builder.Services.AddSingleton<GameResourcesService>();
+
+        if (Enum.TryParse<LogLevel>(builder.Configuration["Logging:LogLevel:Default"].AsSpan(), out var logLevel))
+        {
+            builder.Logging.SetMinimumLevel(logLevel);
+        }
 
         var host = builder.Build();
         host.Run();

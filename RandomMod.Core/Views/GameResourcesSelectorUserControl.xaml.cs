@@ -10,5 +10,4 @@ public partial class GameResourcesSelectorUserControl : UserControl
         DataContext = model;
         InitializeComponent();
     }
-
 }

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Win32;
+using RandomMod.Core.Game;
 using RandomMod.Core.Messages;
 using RandomMod.Core.Services;
 

@@ -19,10 +19,26 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ui:TitleBar Title="随机MOD生成器" Grid.Row="0" />
 
         <ContentControl x:Name="ContentControl" Grid.Row="1" />
+
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="5,0"
+                FontSize="13"
+                Text="{Binding ParseText, Mode=OneWay}" />
+            <ProgressBar
+                Height="10"
+                MinWidth="150"
+                Margin="5,0"
+                Value="{Binding ParseProgress, Mode=OneWay}" />
+        </StackPanel>
     </Grid>
 </ui:FluentWindow>
