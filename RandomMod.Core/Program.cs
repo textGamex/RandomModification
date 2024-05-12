@@ -39,6 +39,8 @@ public static class Program
         builder.Services.AddSingleton<MainNavigationViewModel>();
         builder.Services.AddSingleton<GameResourcesSelectorUserControl>();
         builder.Services.AddSingleton<GameResourcesSelectorViewModel>();
+        builder.Services.AddSingleton<MainConfigPage>();
+        builder.Services.AddSingleton<MainConfigViewModel>();
 
         builder.Services.AddSingleton<AppConfigService>(_ => AppConfigService.Load());
         builder.Services.AddSingleton<IPageService, PageService>();

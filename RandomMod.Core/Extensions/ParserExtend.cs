@@ -1,6 +1,6 @@
 ﻿using CWTools.Process;
 
-namespace HOI_Error_Tools.Logic.HOIParser;
+namespace RandomMod.Core.Extensions;
 
 public static class ParserExtend
 {
@@ -12,5 +12,20 @@ public static class ParserExtend
     public static Node GetChild(this Node node, string key)
     {
         return node.Child(key).Value;
+    }
+
+    public static bool TryGetChild(this Node node, string key, out Node child)
+    {
+        var result = node.Child(key);
+        if (result is null)
+        {
+            child = null!;
+            return false;
+        }
+        else
+        {
+            child = result.Value;
+            return true;
+        }
     }
 }

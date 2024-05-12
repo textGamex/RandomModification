@@ -14,6 +14,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -45,8 +46,36 @@
                 FontSize="1" />
         </Grid>
 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ui:TextBlock
+                Grid.Column="0"
+                Margin="5"
+                VerticalAlignment="Center"
+                Text="输出文件夹:" />
+            <ui:TextBox
+                Grid.Column="1"
+                Margin="5"
+                VerticalAlignment="Center"
+                IsReadOnly="True"
+                Text="{Binding OutputFolder, Mode=Default}"
+                TextWrapping="NoWrap" />
+            <ui:Button
+                Grid.Column="2"
+                MinWidth="80"
+                Margin="5"
+                Command="{Binding SelectOutputFolderPathCommand, Mode=Default}"
+                Content="选择"
+                FontSize="1" />
+        </Grid>
+
         <Button
-            Grid.Row="1"
+            Grid.Row="2"
             MinWidth="100"
             Margin="0,0,0,15"
             HorizontalAlignment="Center"

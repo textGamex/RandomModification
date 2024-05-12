@@ -39,6 +39,19 @@ public class CwToolsParser
         _node = Parsers.ProcessStatements(fileName, filePath, result.GetResult());
     }
 
+    public CwToolsParser(string fileName, string fileContent)
+    {
+        FilePath = fileName;
+        var result = Parsers.ParseScriptFile(fileName, fileContent);
+        IsSuccess = result.IsSuccess;
+        if (IsFailure)
+        {
+            _error = result.GetError();
+            return;
+        }
+        _node = Parsers.ProcessStatements(fileName, string.Empty, result.GetResult());
+    }
+
     public static async Task<CwToolsParser> Parser(string filePath)
     {
         if (!File.Exists(filePath))

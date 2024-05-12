@@ -17,6 +17,13 @@ public partial class MainNavigationViewModel : ObservableObject
         [
             new NavigationViewItem
             {
+                Content = "开始",
+                TargetPageTag = "default",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.AccessTime20 },
+                TargetPageType = typeof(Views.MainConfigPage)
+            },
+            new NavigationViewItem
+            {
                 Content = "地块",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Map24 },
                 TargetPageType = typeof(Views.StateConfigPage)

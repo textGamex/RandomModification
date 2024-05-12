@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="Views\GameResourcesSelectorUserControl.xaml" />
+    <None Remove="Views\MainConfigPage.xaml" />
     <None Remove="Views\MainNavigationUserControl.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\StateConfigPage.xaml" />
@@ -20,13 +21,13 @@
 	<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	<PackageReference Include="CWTools" Version="0.5.0-alpha" />
 	<PackageReference Include="FSharp.Core" Version="8.0.200" />
+	<PackageReference Include="MathNet.Numerics" Version="5.0.0" />
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 	<PackageReference Include="WPF-UI" Version="3.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messages\" />
     <Folder Include="Models\" />
     <Folder Include="Extensions\" />
   </ItemGroup>

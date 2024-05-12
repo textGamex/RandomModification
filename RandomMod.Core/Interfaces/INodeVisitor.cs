@@ -4,5 +4,5 @@ namespace RandomMod.Core.Interfaces;
 
 public interface INodeVisitor
 {
-    void Visitor(Node rootNode);
+    void Visit(Node rootNode);
 }

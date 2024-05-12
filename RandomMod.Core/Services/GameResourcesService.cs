@@ -1,8 +1,9 @@
-﻿using RandomMod.Core.Game.Parser;
+﻿using CWTools.Process;
 
 namespace RandomMod.Core.Services;
 
 public sealed class GameResourcesService
 {
-    public List<CwToolsParser>? States { get; set; }
+    public List<Node> States { get; set; } = [];
+    public Dictionary<string, int> CountryStateCount { get; set; } = [];
 }

@@ -13,7 +13,7 @@ public partial class MainNavigationUserControl : UserControl, INavigationWindow
 
         DataContext = model;
         navigationService.SetNavigationControl(RootNavigation);
-        Loaded += (_, _) => RootNavigation.Navigate(typeof(StateConfigPage));
+        Loaded += (_, _) => RootNavigation.Navigate("default");
     }
 
     #region 导航实现

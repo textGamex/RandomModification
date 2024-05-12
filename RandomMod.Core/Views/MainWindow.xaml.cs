@@ -20,17 +20,21 @@ public partial class MainWindow
         _configService = configService;
         InitializeComponent();
 
-        if (string.IsNullOrWhiteSpace(configService.GameRootPath))
+        if (string.IsNullOrWhiteSpace(configService.GameRootPath) || string.IsNullOrWhiteSpace(configService.OutputFolder))
         {
             ContentControl.Content = serviceProvider.GetRequiredService<GameResourcesSelectorUserControl>();
         }
         else
         {
             ContentControl.Content = serviceProvider.GetRequiredService<MainNavigationUserControl>();
-            Task.Run(model.StartParse);
+            Task.Run(model.StartParseAsync);
         }
         WeakReferenceMessenger.Default.Register<FinishAppFirstConfigMessage>(this,
-            (_,_) => ContentControl.Content = serviceProvider.GetRequiredService<MainNavigationUserControl>());
+            (_, _) =>
+            {
+                ContentControl.Content = serviceProvider.GetRequiredService<MainNavigationUserControl>();
+                model.StartParseAsync().ConfigureAwait(false);
+            });
     }
 
     protected override void OnClosed(EventArgs e)
