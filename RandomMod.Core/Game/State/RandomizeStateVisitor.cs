@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design;
-using CWTools.Parser;
+﻿using CWTools.Parser;
 using CWTools.Process;
 using CWTools.Utilities;
 using MathNet.Numerics.Random;
@@ -11,8 +10,6 @@ namespace RandomMod.Core.Game.State;
 
 public class RandomizeStateVisitor : INodeVisitor
 {
-    
-
     public int RandomManpower { get; private set; }
 
     private static readonly MersenneTwister Random = new(true);

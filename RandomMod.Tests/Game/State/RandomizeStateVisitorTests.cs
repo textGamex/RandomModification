@@ -25,8 +25,9 @@ public class RandomizeStateVisitorTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(stateNode.Leafs(ScriptKeyWords.Manpower).First().ValueText, Is.EqualTo(visitor.RandomManpower.ToString()));
-            Assert.That(stateNode.Leafs(ScriptKeyWords.Manpower).Count(), Is.EqualTo(1));
+            var manpower = stateNode.Leafs(ScriptKeyWords.Manpower).ToArray();
+            Assert.That(manpower[0].ValueText, Is.EqualTo(visitor.RandomManpower.ToString()));
+            Assert.That(manpower.Length, Is.EqualTo(1));
         });
     }
 }

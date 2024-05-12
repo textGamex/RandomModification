@@ -10,6 +10,9 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private string _gameRootPath;
 
+    [ObservableProperty]
+    private string _outputFolderPath;
+
     private readonly AppConfigService _configService;
 
     public SettingsViewModel(AppConfigService configService)
@@ -17,6 +20,7 @@ public partial class SettingsViewModel : ObservableObject
         _configService = configService;
 
         _gameRootPath = _configService.GameRootPath;
+        _outputFolderPath = _configService.OutputFolder;
     }
 
     [RelayCommand]
@@ -29,8 +33,23 @@ public partial class SettingsViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    private void SelectOutputFolder()
+    {
+        var dialog = new OpenFolderDialog { Title = "选择输出文件夹" };
+        if (dialog.ShowDialog() == true)
+        {
+            OutputFolderPath = dialog.FolderName;
+        }
+    }
+
     partial void OnGameRootPathChanged(string value)
     {
         _configService.GameRootPath = value;
+    }
+
+    partial void OnOutputFolderPathChanged(string value)
+    {
+        _configService.OutputFolder = value;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
@@ -31,6 +32,6 @@ public class AppConfigService
 
     public void Save()
     {
-        File.WriteAllText(FilePath, JsonSerializer.Serialize(this));
+        File.WriteAllText(FilePath, JsonSerializer.Serialize(this), Encoding.UTF8);
     }
 }
