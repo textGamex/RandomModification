@@ -1,10 +1,13 @@
-﻿using RandomMod.Core.Game.Parser;
+﻿using RandomMod.Core.Game;
+using RandomMod.Core.Game.Parser;
+using RandomMod.Core.Game.State;
 using RandomMod.Core.Services;
 using RandomMod.Core.Services.Game;
 
-namespace RandomMod.Core.Game.State.Tests;
+namespace RandomMod.Tests.Game.State;
 
-[TestFixture()]
+[TestFixture]
+[TestOf(typeof(RandomizeStateVisitor))]
 public class RandomizeStateVisitorTests
 {
     private const string Content =
@@ -15,7 +18,7 @@ public class RandomizeStateVisitorTests
         }
         """;
 
-    [Test()]
+    [Test]
     public void VisitorTest()
     {
         var node = new CwToolsParser("test.txt", Content).GetResult();
