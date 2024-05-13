@@ -1,12 +1,13 @@
 ﻿using RandomMod.Core.Game.Parser;
 using RandomMod.Core.Services;
+using RandomMod.Core.Services.Game;
 
 namespace RandomMod.Core.Game.State.Tests;
 
 [TestFixture()]
 public class RandomizeStateVisitorTests
 {
-    private const string Content = 
+    private const string Content =
         """
         state = {
             id = 1
@@ -19,7 +20,7 @@ public class RandomizeStateVisitorTests
     {
         var node = new CwToolsParser("test.txt", Content).GetResult();
         var stateNode = node.Child(ScriptKeyWords.State).Value;
-        var visitor = new RandomizeStateVisitor(new GameResourcesService());
+        var visitor = new RandomizeStateVisitor(new GameResourcesService(), new StateConfigService());
 
         visitor.Visit(node);
 
@@ -27,7 +28,7 @@ public class RandomizeStateVisitorTests
         {
             var manpower = stateNode.Leafs(ScriptKeyWords.Manpower).ToArray();
             Assert.That(manpower[0].ValueText, Is.EqualTo(visitor.RandomManpower.ToString()));
-            Assert.That(manpower.Length, Is.EqualTo(1));
+            Assert.That(manpower, Has.Length.EqualTo(1));
         });
     }
 }

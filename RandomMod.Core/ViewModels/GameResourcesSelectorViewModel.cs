@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Win32;
+using RandomMod.Core.Interfaces;
 using RandomMod.Core.Messages;
 using RandomMod.Core.Services;
 
@@ -14,11 +15,13 @@ public partial class GameResourcesSelectorViewModel : ObservableObject
     [ObservableProperty]
     private string _outputFolder = string.Empty;
 
-    private readonly AppConfigService _configService;
+    private readonly AppConfigService _appConfig;
+    private readonly IConfigManagerService _configManagerService;
 
-    public GameResourcesSelectorViewModel(AppConfigService configService)
+    public GameResourcesSelectorViewModel(AppConfigService appConfig, IConfigManagerService configManagerService)
     {
-        _configService = configService;
+        _appConfig = appConfig;
+        _configManagerService = configManagerService;
     }
 
     [RelayCommand]
@@ -56,10 +59,10 @@ public partial class GameResourcesSelectorViewModel : ObservableObject
         {
             return;
         }
-        _configService.GameRootPath = GameRootPath;
-        _configService.OutputFolder = OutputFolder;
+        _appConfig.GameRootPath = GameRootPath;
+        _appConfig.OutputFolder = OutputFolder;
 
-        Task.Run(_configService.Save);
+        Task.Run(() => _configManagerService.SaveConfig(_appConfig));
         WeakReferenceMessenger.Default.Send(new FinishAppFirstConfigMessage());
     }
 }

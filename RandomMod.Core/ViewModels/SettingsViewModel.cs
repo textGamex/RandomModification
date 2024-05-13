@@ -7,20 +7,23 @@ namespace RandomMod.Core.ViewModels;
 
 public partial class SettingsViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string _gameRootPath;
+    public string GameRootPath
+    {
+        get => _configService.GameRootPath;
+        set => SetProperty(ref _configService.GameRootPath, value);
+    }
 
-    [ObservableProperty]
-    private string _outputFolderPath;
+    public string OutputFolderPath
+    {
+        get => _configService.OutputFolder;
+        set => SetProperty(ref _configService.OutputFolder, value);
+    }
 
     private readonly AppConfigService _configService;
 
     public SettingsViewModel(AppConfigService configService)
     {
         _configService = configService;
-
-        _gameRootPath = _configService.GameRootPath;
-        _outputFolderPath = _configService.OutputFolder;
     }
 
     [RelayCommand]
@@ -41,15 +44,5 @@ public partial class SettingsViewModel : ObservableObject
         {
             OutputFolderPath = dialog.FolderName;
         }
-    }
-
-    partial void OnGameRootPathChanged(string value)
-    {
-        _configService.GameRootPath = value;
-    }
-
-    partial void OnOutputFolderPathChanged(string value)
-    {
-        _configService.OutputFolder = value;
     }
 }

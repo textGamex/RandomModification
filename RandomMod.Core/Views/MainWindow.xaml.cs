@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RandomMod.Core.Interfaces;
 using RandomMod.Core.Messages;
 using RandomMod.Core.Services;
 using RandomMod.Core.ViewModels;
@@ -10,17 +11,17 @@ namespace RandomMod.Core.Views;
 public partial class MainWindow
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
-    private readonly AppConfigService _configService;
+    private readonly IConfigManagerService _configManagerService;
 
     public MainWindow(IHostApplicationLifetime hostApplicationLifetime, MainWindowViewModel model, 
-        AppConfigService configService, IServiceProvider serviceProvider)
+        AppConfigService appConfigService, IServiceProvider serviceProvider, IConfigManagerService configManagerService)
     {
         DataContext = model;
         _hostApplicationLifetime = hostApplicationLifetime;
-        _configService = configService;
+        _configManagerService = configManagerService;
         InitializeComponent();
 
-        if (string.IsNullOrWhiteSpace(configService.GameRootPath) || string.IsNullOrWhiteSpace(configService.OutputFolder))
+        if (string.IsNullOrWhiteSpace(appConfigService.GameRootPath) || string.IsNullOrWhiteSpace(appConfigService.OutputFolder))
         {
             ContentControl.Content = serviceProvider.GetRequiredService<GameResourcesSelectorUserControl>();
         }
@@ -40,7 +41,7 @@ public partial class MainWindow
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
-        _configService.Save();
+        _configManagerService.SaveAll();
         _hostApplicationLifetime.StopApplication();
     }
 }

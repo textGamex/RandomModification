@@ -2,12 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RandomMod.Core.Game;
+using RandomMod.Core.Interfaces;
 using RandomMod.Core.Services;
+using RandomMod.Core.Services.Game;
 using RandomMod.Core.ViewModels;
 using RandomMod.Core.Views;
 using Wpf.Ui;
-using Wpf.Ui.Controls;
 
 namespace RandomMod.Core;
 
@@ -42,7 +42,11 @@ public static class Program
         builder.Services.AddSingleton<MainConfigPage>();
         builder.Services.AddSingleton<MainConfigViewModel>();
 
-        builder.Services.AddSingleton<AppConfigService>(_ => AppConfigService.Load());
+        // 注入配置服务
+        builder.Services.AddSingleton<IConfigManagerService, ConfigManagerService>();
+        builder.Services.AddSingleton<AppConfigService>(sp => sp.GetRequiredService<IConfigManagerService>().LoadConfig<AppConfigService>());
+        builder.Services.AddSingleton<StateConfigService>(sp => sp.GetRequiredService<IConfigManagerService>().LoadConfig<StateConfigService>());
+
         builder.Services.AddSingleton<IPageService, PageService>();
         builder.Services.AddSingleton<IContentDialogService, ContentDialogService>();
         builder.Services.AddSingleton<DialogService>();

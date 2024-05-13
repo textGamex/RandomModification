@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CWTools.Process;
@@ -39,7 +38,7 @@ public partial class MainWindowViewModel : ObservableObject
         var count = 0;
 
         var nodes = new List<Node>(sum);
-        var countries = new Dictionary<string, int>();
+        var countries = new Dictionary<string, int>(128);
         
         _logger.LogInformation("开始解析, 文件数量: {Count}", paths.StatesFilePathList.Count);
         foreach (var path in paths.StatesFilePathList)

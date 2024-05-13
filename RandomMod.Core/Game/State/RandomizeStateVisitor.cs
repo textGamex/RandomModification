@@ -5,6 +5,7 @@ using MathNet.Numerics.Random;
 using RandomMod.Core.Extensions;
 using RandomMod.Core.Interfaces;
 using RandomMod.Core.Services;
+using RandomMod.Core.Services.Game;
 
 namespace RandomMod.Core.Game.State;
 
@@ -14,10 +15,12 @@ public class RandomizeStateVisitor : INodeVisitor
 
     private static readonly MersenneTwister Random = new(true);
     private readonly GameResourcesService _resourcesService;
+    private readonly StateConfigService _stateConfig;
 
-    public RandomizeStateVisitor(GameResourcesService resourcesService)
+    public RandomizeStateVisitor(GameResourcesService resourcesService, StateConfigService stateConfig)
     {
         _resourcesService = resourcesService;
+        _stateConfig = stateConfig;
         RandomManpower = 0;
     }
 
@@ -46,10 +49,10 @@ public class RandomizeStateVisitor : INodeVisitor
             : null;
     }
 
-    private static int GetManpower(int stateAmount)
+    private int GetManpower(int stateAmount)
     {
-        var random = Random.Next(100, 15000);
-        return (int)(Math.Log10(stateAmount) * 10000 + random);
+        var random = Random.Next(_stateConfig.ManpowerMinRandom, _stateConfig.ManpowerMaxRandom + 1);
+        return (int)(Math.Log10(stateAmount) * 50000 + random);
     }
 
     private static void ReplaceManpower(Node stateNode, int manpower)

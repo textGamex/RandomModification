@@ -19,6 +19,29 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <GroupBox Header="人力">
+            <ui:Card Margin="10,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
+                    <StackPanel Orientation="Horizontal">
+                        <ui:TextBlock VerticalAlignment="Center" Text="随机数范围" />
+                        <ui:NumberBox
+                            Margin="8,0"
+                            ClearButtonEnabled="False"
+                            InputMethod.IsInputMethodEnabled="False"
+                            Text="{Binding ManpowerMinRandom}" />
+                        <Label VerticalAlignment="Center" Content="-----" />
+                        <ui:NumberBox
+                            Margin="8,0"
+                            ClearButtonEnabled="False"
+                            InputMethod.IsInputMethodEnabled="False"
+                            Text="{Binding ManpowerMaxRandom}" />
+                    </StackPanel>
+                </Grid>
+            </ui:Card>
+        </GroupBox>
     </Grid>
 </Page>

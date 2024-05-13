@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using RandomMod.Core.Game.State;
 using RandomMod.Core.Messages;
 using RandomMod.Core.Services;
+using RandomMod.Core.Services.Game;
 
 namespace RandomMod.Core.ViewModels;
 
@@ -17,13 +18,15 @@ public partial class MainConfigViewModel : ObservableObject
     private readonly GameResourcesService _gameResourcesService;
     private readonly ILogger<MainConfigViewModel> _logger;
     private readonly AppConfigService _configService;
+    private readonly StateConfigService _stateConfig;
 
     public MainConfigViewModel(GameResourcesService gameResourcesService, ILogger<MainConfigViewModel> logger,
-        AppConfigService configService)
+        AppConfigService configService, StateConfigService stateConfig)
     {
         _gameResourcesService = gameResourcesService;
         _logger = logger;
         _configService = configService;
+        _stateConfig = stateConfig;
         WeakReferenceMessenger.Default.Register<ParseFilesCompleteMessage>(
             this, (_, _) => IsParseComplete = true);
     }
@@ -31,7 +34,7 @@ public partial class MainConfigViewModel : ObservableObject
     [RelayCommand]
     private async Task StartAsync()
     {
-        var visitor = new RandomizeStateVisitor(_gameResourcesService);
+        var visitor = new RandomizeStateVisitor(_gameResourcesService, _stateConfig);
         foreach (var state in _gameResourcesService.States)
         {
             visitor.Visit(state);
