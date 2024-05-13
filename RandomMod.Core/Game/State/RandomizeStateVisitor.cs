@@ -1,26 +1,19 @@
 ﻿using CWTools.Parser;
 using CWTools.Process;
 using CWTools.Utilities;
-using MathNet.Numerics.Random;
 using RandomMod.Core.Extensions;
 using RandomMod.Core.Interfaces;
-using RandomMod.Core.Services;
-using RandomMod.Core.Services.Game;
 
 namespace RandomMod.Core.Game.State;
 
 public class RandomizeStateVisitor : INodeVisitor
 {
     public int RandomManpower { get; private set; }
+    private readonly StateGenerator _stateGenerator;
 
-    private static readonly MersenneTwister Random = new(true);
-    private readonly GameResourcesService _resourcesService;
-    private readonly StateConfigService _stateConfig;
-
-    public RandomizeStateVisitor(GameResourcesService resourcesService, StateConfigService stateConfig)
+    public RandomizeStateVisitor(StateGenerator stateGenerator)
     {
-        _resourcesService = resourcesService;
-        _stateConfig = stateConfig;
+        _stateGenerator = stateGenerator;
         RandomManpower = 0;
     }
 
@@ -37,8 +30,7 @@ public class RandomizeStateVisitor : INodeVisitor
     private void RandomizeState(Node stateNode)
     {
         var ownerTag = GetOwnerTag(stateNode);
-        var ownerStateAmount = _resourcesService.CountryStateCount.GetValueOrDefault(ownerTag ?? string.Empty, 1);
-        RandomManpower = GetManpower(ownerStateAmount);
+        RandomManpower = _stateGenerator.GetManpowerByCountry(ownerTag ?? string.Empty);
         ReplaceManpower(stateNode, RandomManpower);
     }
 
@@ -47,12 +39,6 @@ public class RandomizeStateVisitor : INodeVisitor
         return node.TryGetChild(ScriptKeyWords.History, out node)
             ? node.Leafs(ScriptKeyWords.Owner).FirstOrDefault()?.ValueText
             : null;
-    }
-
-    private int GetManpower(int stateAmount)
-    {
-        var random = Random.Next(_stateConfig.ManpowerMinRandom, _stateConfig.ManpowerMaxRandom + 1);
-        return (int)(Math.Log10(stateAmount) * 50000 + random);
     }
 
     private static void ReplaceManpower(Node stateNode, int manpower)

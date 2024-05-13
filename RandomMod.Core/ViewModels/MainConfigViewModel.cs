@@ -18,15 +18,15 @@ public partial class MainConfigViewModel : ObservableObject
     private readonly GameResourcesService _gameResourcesService;
     private readonly ILogger<MainConfigViewModel> _logger;
     private readonly AppConfigService _configService;
-    private readonly StateConfigService _stateConfig;
+    private readonly StateConfigService _stateConfigService;
 
     public MainConfigViewModel(GameResourcesService gameResourcesService, ILogger<MainConfigViewModel> logger,
-        AppConfigService configService, StateConfigService stateConfig)
+        AppConfigService configService, StateConfigService stateConfigService)
     {
         _gameResourcesService = gameResourcesService;
         _logger = logger;
         _configService = configService;
-        _stateConfig = stateConfig;
+        _stateConfigService = stateConfigService;
         WeakReferenceMessenger.Default.Register<ParseFilesCompleteMessage>(
             this, (_, _) => IsParseComplete = true);
     }
@@ -34,7 +34,7 @@ public partial class MainConfigViewModel : ObservableObject
     [RelayCommand]
     private async Task StartAsync()
     {
-        var visitor = new RandomizeStateVisitor(_gameResourcesService, _stateConfig);
+        var visitor = new RandomizeStateVisitor(new StateGenerator(_gameResourcesService, _stateConfigService));
         foreach (var state in _gameResourcesService.States)
         {
             visitor.Visit(state);

@@ -20,7 +20,7 @@ public class RandomizeStateVisitorTests
     {
         var node = new CwToolsParser("test.txt", Content).GetResult();
         var stateNode = node.Child(ScriptKeyWords.State).Value;
-        var visitor = new RandomizeStateVisitor(new GameResourcesService(), new StateConfigService());
+        var visitor = new RandomizeStateVisitor(new StateGenerator(new GameResourcesService(), new StateConfigService()));
 
         visitor.Visit(node);
 
