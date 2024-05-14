@@ -7,5 +7,7 @@ public class StateConfigService : ConfigBase, IConfig
 {
     public int ManpowerMinRandom = 1000;
     public int ManpowerMaxRandom = 15000;
+    public int Multiplier = 50000;
+
     public override string GetFileName() => "GameStateConfig.json";
 }

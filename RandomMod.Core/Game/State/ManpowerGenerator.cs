@@ -60,7 +60,7 @@ public sealed partial class StateGenerator
             for (var i = 0; i < totalState; i++)
             {
                 var random = _random.Next(_stateConfig.ManpowerMinRandom, _stateConfig.ManpowerMaxRandom + 1);
-                sum += (int)(Math.Log10(totalState) * 50000 + random);
+                sum += (int)(Math.Log10(totalState) * _stateConfig.Multiplier + random);
             }
             return sum;
         }

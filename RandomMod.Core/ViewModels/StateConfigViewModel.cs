@@ -18,6 +18,12 @@ public partial class StateConfigViewModel : ObservableObject
         set => SetProperty(ref _stateConfigService.ManpowerMaxRandom, Math.Max(value, ManpowerMinRandom));
     }
 
+    public int Multiplier
+    {
+        get => _stateConfigService.Multiplier;
+        set => SetProperty(ref _stateConfigService.Multiplier, value);
+    }
+
     private readonly StateConfigService _stateConfigService;
 
     public StateConfigViewModel(StateConfigService stateConfigService)

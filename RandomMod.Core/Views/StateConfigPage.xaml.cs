@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using System.Windows.Input;
 using RandomMod.Core.ViewModels;
 
 namespace RandomMod.Core.Views;
